@@ -1,11 +1,7 @@
 package cz.cvut.fel.ts1;
 
-import cz.cvut.fel.ts1.archive.PurchasesArchive;
-import cz.cvut.fel.ts1.shop.EShopController;
-import cz.cvut.fel.ts1.shop.ShoppingCart;
-import cz.cvut.fel.ts1.shop.StandardItem;
-import cz.cvut.fel.ts1.storage.NoItemInStorage;
-import cz.cvut.fel.ts1.storage.Storage;
+import cz.cvut.fel.ts1.shop.*;
+import cz.cvut.fel.ts1.storage.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,15 +22,19 @@ class EShopControllerTest {
 
     @Test
     void testPurchaseShoppingCartHappyPath() throws NoItemInStorage {
+        // 1. Inicializuj item
         StandardItem item = new StandardItem(1, "A", 50.0f, "Cat", 10);
-        EShopController.startEShop();
 
-        Storage storage = new Storage();
-        storage.insertItems(item, 2);
+        // 2. Přidej item do EShop storage
+        EShopController.getStorage().insertItems(item, 2);
 
+        // 3. Přidej do košíku a nakup
         ShoppingCart cart = new ShoppingCart();
         cart.addItem(item);
-        EShopController.purchaseShoppingCart(cart, "Tester", "Praha");
+
+        assertDoesNotThrow(() -> {
+            EShopController.purchaseShoppingCart(cart, "Tester", "Praha");
+        });
     }
 
     @Test

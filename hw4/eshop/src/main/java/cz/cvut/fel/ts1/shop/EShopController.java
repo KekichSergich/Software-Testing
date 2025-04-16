@@ -42,13 +42,16 @@ public class EShopController {
         }
     }
 
+    public static Storage getStorage() {
+        return storage;
+    }
 
 
 
 
 
 
-public static void main(String[] args) throws NoItemInStorage {
+    public static void main(String[] args) throws NoItemInStorage {
         EShopController.startEShop();
         
         /* make up an artificial data */
